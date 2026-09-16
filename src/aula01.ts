@@ -127,14 +127,3 @@ for (const numero of numeros) {
 }
 
 
-let cor: string = "verde";
-
- cor = "amarelo";
- cor = "vermelho";
-
-if (cor === "verde" || cor === "amarelo"){
-    console.log("passe")
-}
-else{
-    console.log("não passe")
-}

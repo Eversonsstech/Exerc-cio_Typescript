@@ -72,13 +72,20 @@ for (const total of valores) {
     soma += total;
 }
 console.log(soma);
-let cor = "verde";
-cor = "amarelo";
-cor = "vermelho";
-if (cor === "verde" || cor === "amarelo") {
-    console.log("passe");
+// 9. Utilize um loop for combinado com uma condicional para exibir apenas os números ímpares entre 1 e 15.
+for (let i = 1; i <= 15; i++) {
+    if (i % 2 !== 0) {
+        console.log(i);
+    }
 }
-else {
-    console.log("não passe");
+// 10. Desafio: combine tudo o que foi visto — crie um array de números, percorra com um loop e, para cada número, utilize uma condicional para classificá-lo como "par" ou "ímpar", exibindo o resultado no console.
+let numeros = [2, 5, 8, 11, 14, 17];
+for (const numero of numeros) {
+    if (numero % 2 === 0) {
+        console.log(numero + " é par");
+    }
+    else {
+        console.log(numero + " é ímpar");
+    }
 }
 //# sourceMappingURL=aula01.js.map
