@@ -27,8 +27,7 @@ async function cafeexemploo() {
 cafeexemploo();
 
 
-// ........
-
+// GET e POST
 
 type CEP = {
     cep: string;
@@ -46,52 +45,76 @@ type CEP = {
     siafi: string;
 };
 
+async function buscarCep(): Promise<CEP> {
 
-async function buscarCep(): Promise<CEP>{ // Get da API , a busca dos dados
-    const response = await fetch ("https://viacep.com.br/ws/01001000/json/");
+    // MÉTODO: GET
+    // FINALIDADE: consultar os dados de um endereço através do CEP.
+    // ENDPOINT: https://viacep.com.br/ws/01001000/json/
+
+    // REQUEST:
+    // O CEP é enviado na própria URL.
+    // Neste exemplo, o CEP consultado é 01001000.
+
+
+    const response = await fetch(
+        "https://viacep.com.br/ws/01001000/json/"
+    );
+
+    // RESPONSE:
+    // A API retorna os dados do CEP em formato JSON.
+    // response.json() transforma a resposta JSON em um objeto JavaScript.
+    // O "as CEP" informa ao TypeScript a estrutura esperada da resposta.
+
     const dados = await response.json() as CEP;
-    return dados;
 
+    return dados;
 }
+
 async function buscarCepExemplo() {
-    const resultadoAguardado =await buscarCep();
+    const resultadoAguardado = await buscarCep();
+
     console.log(resultadoAguardado);
-  
 }
+
 buscarCepExemplo();
 
-async function enviarCep(): Promise<void> {
 
-    const dados: CEP = {
-        cep: "01001-000",
-        logradouro: "Praça da Sé",
-        complemento: "lado ímpar",
-        unidade: "",
-        bairro: "Sé",
-        localidade: "São Paulo",
-        uf: "SP",
-        estado: "São Paulo",
-        regiao: "Sudeste",
-        ibge: "3550308",
-        gia: "1004",
-        ddd: "11",
-        siafi: "7107"
+async function enviarPost(): Promise<void> {
+
+    // REQUEST:
+    // Dados que serão enviados para a API através do método POST.
+    // O JSONPlaceholder espera dados de um post.
+
+    const dados = {
+        title: "Meu primeiro post",
+        body: "Estou estudando TypeScript e APIs.",
+        userId: 1
     };
 
-    const response = await fetch("https://viacep.com.br/ws/01001000/json/", {
-        method: "POST",
+    // MÉTODO: POST
+    // ENDPOINT: https://jsonplaceholder.typicode.com/posts
+    // FINALIDADE: enviar dados para simular a criação de um novo post.
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+    const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+            method: "POST",
 
-        body: JSON.stringify(dados)
-    });
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            // REQUEST BODY:
+            // JSON.stringify() transforma o objeto JavaScript em JSON
+            // para que ele possa ser enviado no corpo da requisição.
+            
+            body: JSON.stringify(dados)
+        }
+    );
 
     const resultado = await response.json();
 
     console.log(resultado);
 }
 
-enviarCep();
-
+enviarPost();
