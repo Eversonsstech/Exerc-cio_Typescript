@@ -228,3 +228,22 @@ Como o código contém um erro intencional quando essa linha é ativada, a compi
 ---
 
 **Projeto de estudo — TypeScript / Módulo 2**
+
+
+# EVERSON e LUIZ FELLIPE
+
+## 1. O que o await faz?
+
+O await faz o programa esperar o resultado de uma operação assíncrona antes de continuar. Ele é usado para esperar a resolução de uma Promise.
+
+## 2. Qual método HTTP corresponde a cada letra do CRUD?
+
+Create → POST, Read → GET, Update → PUT/PATCH e Delete → DELETE.
+
+## 3. Por que o fetch não dá erro quando a API responde 404?
+
+O fetch não considera o status 404 uma exceção. Ele recebe a resposta normalmente, por isso precisamos verificar response.ok ou response.status para identificar o erro.
+
+## 4. Por que o post criado não apareceu na lista?
+
+A JSONPlaceholder é uma API de testes e não salva as alterações permanentemente. Por isso, o post criado é retornado pela API, mas não aparece depois na lista.
