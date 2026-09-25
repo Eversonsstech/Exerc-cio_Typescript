@@ -1,6 +1,4 @@
-"use strict";
 // 1º Exercício. Uso de arrays e objetos.
-Object.defineProperty(exports, "__esModule", { value: true });
 // a. ARRAY
 let nomes = ["João", "Maria", "Carlos", "Ana"];
 console.log("Lista de nomes:");
@@ -56,4 +54,5 @@ function testarSoma() {
     }
 }
 testarSoma();
+export {};
 //# sourceMappingURL=aula02.js.map

@@ -1,4 +1,3 @@
-"use strict";
 /*function num(numero: number){
     
      
@@ -22,7 +21,6 @@ function num(numero: number) {
 
 num(8);
 */
-Object.defineProperty(exports, "__esModule", { value: true });
 let numero = 8;
 if (numero % 2 === 0) {
     console.log("O número é par");
@@ -30,4 +28,5 @@ if (numero % 2 === 0) {
 else {
     console.log("O número é ímpar");
 }
+export {};
 //# sourceMappingURL=aula03.js.map

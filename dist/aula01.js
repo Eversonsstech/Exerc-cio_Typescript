@@ -1,6 +1,4 @@
-"use strict";
 // 1. Declare uma variável para cada tipo primitivo básico do TypeScript (string, number, boolean), atribuindo valores de sua escolha.  
-Object.defineProperty(exports, "__esModule", { value: true });
 let nome = "João Cana Brava";
 let idade = 24;
 let ativo = true;
@@ -88,4 +86,5 @@ for (const numero of numeros) {
         console.log(numero + " é ímpar");
     }
 }
+export {};
 //# sourceMappingURL=aula01.js.map

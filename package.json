@@ -1,5 +1,14 @@
 {
-  "devDependencies": {
-    "typescript": "^7.0.2"
-  }
+"name": "2_modulo",
+"type": "module",
+"scripts": {
+"test": "vitest",
+"test:run": "vitest run"
+},
+"devDependencies": {
+"@types/node": "^26.5.1",
+"vitest": "^5.0.1"
 }
+}
+
+

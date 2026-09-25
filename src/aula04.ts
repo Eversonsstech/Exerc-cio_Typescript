@@ -1,33 +1,48 @@
-async function cafe(): Promise<string>{
-    return "café pronto!"
+// ======================================================
+// ASYNC E AWAIT
+// ======================================================
+
+async function cafe(): Promise<string> {
+    return "café pronto!";
 }
+
 async function cafeexemplo() {
     const resultado = cafe();
-    console.log(resultado);    
+    console.log(resultado);
+
     const resultadoAguardado = await cafe();
     console.log(resultadoAguardado);
 }
+
 cafeexemplo();
 
-//setTimeout
 
-async function cafee(): Promise<string>{
-        return new Promise((resolve) => {
-            setTimeout(() =>{
-                resolve("café pronto!");
-            }, 2000)    
+// ======================================================
+// SETTIMEOUT
+// ======================================================
+
+async function cafee(): Promise<string> {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("café pronto!");
+        }, 2000);
     });
 }
+
 async function cafeexemploo() {
     const resultado = cafee();
-    console.log(resultado);    
+    console.log(resultado);
+
     const resultadoAguardado = await cafee();
     console.log(resultadoAguardado);
 }
+
 cafeexemploo();
 
 
-// GET e POST
+// ======================================================
+// GET — VIACEP
+// ======================================================
 
 type CEP = {
     cep: string;
@@ -55,7 +70,6 @@ async function buscarCep(): Promise<CEP> {
     // O CEP é enviado na própria URL.
     // Neste exemplo, o CEP consultado é 01001000.
 
-
     const response = await fetch(
         "https://viacep.com.br/ws/01001000/json/"
     );
@@ -79,42 +93,316 @@ async function buscarCepExemplo() {
 buscarCepExemplo();
 
 
-async function enviarPost(): Promise<void> {
+// ======================================================
+// 1. GET — BUSCAR LISTA DE POSTS
+// ======================================================
 
-    // REQUEST:
-    // Dados que serão enviados para a API através do método POST.
-    // O JSONPlaceholder espera dados de um post.
+async function buscarListaPosts(): Promise<void> {
+    try {
 
-    const dados = {
-        title: "Meu primeiro post",
-        body: "Estou estudando TypeScript e APIs.",
-        userId: 1
-    };
+        // MÉTODO: GET
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts
+        // FINALIDADE: Buscar a lista de posts disponível na API.
 
-    // MÉTODO: POST
-    // ENDPOINT: https://jsonplaceholder.typicode.com/posts
-    // FINALIDADE: enviar dados para simular a criação de um novo post.
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts"
+        );
 
-    const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-            method: "POST",
+        // VERIFICAÇÃO DE RESPOSTA:
+        // response.ok retorna true quando o status HTTP está entre 200 e 299.
+        // Dessa forma, podemos verificar se a requisição foi realizada com sucesso.
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+        if (response.ok) {
 
-            // REQUEST BODY:
-            // JSON.stringify() transforma o objeto JavaScript em JSON
-            // para que ele possa ser enviado no corpo da requisição.
-            
-            body: JSON.stringify(dados)
+            // RESPONSE:
+            // response.json() transforma a resposta JSON da API
+            // em um array de objetos JavaScript.
+
+            const posts = await response.json();
+
+            // RESULTADO:
+            // Mostra o título dos três primeiros posts.
+
+            console.log("Títulos dos 3 primeiros posts:");
+
+            console.log(posts[0].title);
+            console.log(posts[1].title);
+            console.log(posts[2].title);
+
+        } else {
+            console.log("Erro ao buscar os posts.");
+            console.log("Status:", response.status);
         }
-    );
 
-    const resultado = await response.json();
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
 
-    console.log(resultado);
+buscarListaPosts();
+
+
+// ======================================================
+// 2. GET — BUSCAR POST DE ID 1
+// ======================================================
+
+async function buscarPostPorId(): Promise<void> {
+    try {
+
+        // MÉTODO: GET
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts/1
+        // FINALIDADE: Buscar o post específico de ID 1.
+
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts/1"
+        );
+
+        // VERIFICAÇÃO DE RESPOSTA:
+        // response.ok retorna true quando o status HTTP está entre 200 e 299.
+
+        if (response.ok) {
+
+            // RESPONSE:
+            // response.json() transforma a resposta JSON da API
+            // em um objeto JavaScript.
+
+            const resultado = await response.json();
+
+            // RESULTADO:
+            // Mostra o título do post de ID 1.
+
+            console.log("Título do post de ID 1:");
+            console.log(resultado.title);
+
+        } else {
+            console.log("Erro ao buscar o post.");
+            console.log("Status:", response.status);
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
+
+buscarPostPorId();
+
+
+// ======================================================
+// 3. POST — CRIAR POST
+// ======================================================
+
+async function enviarPost(): Promise<void> {
+    try {
+
+        // REQUEST:
+        // Dados que serão enviados para a API através do método POST.
+        // O JSONPlaceholder espera dados de um post.
+
+        const dados = {
+            title: "Meu primeiro post",
+            body: "Estou estudando TypeScript e APIs.",
+            userId: 1
+        };
+
+        // MÉTODO: POST
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts
+        // FINALIDADE: Enviar dados para simular a criação de um novo post.
+
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts",
+            {
+                method: "POST",
+
+                // HEADERS:
+                // Informa ao servidor que o corpo da requisição está no formato JSON.
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                // REQUEST BODY:
+                // JSON.stringify() transforma o objeto JavaScript em JSON
+                // para que ele possa ser enviado no corpo da requisição.
+
+                body: JSON.stringify(dados)
+            }
+        );
+
+        // VERIFICAÇÃO DE RESPOSTA:
+        // response.ok retorna true quando o status HTTP está entre 200 e 299.
+
+        if (response.ok) {
+
+            // RESPONSE:
+            // response.json() transforma a resposta JSON da API
+            // em um objeto JavaScript.
+
+            const resultado = await response.json();
+
+            console.log("Post criado com sucesso:");
+            console.log(resultado);
+
+        } else {
+            console.log("Erro ao criar o post.");
+            console.log("Status:", response.status);
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
 }
 
 enviarPost();
+
+
+// ======================================================
+// 4. PUT — ATUALIZAR POST DE ID 1
+// ======================================================
+
+async function atualizarPost(): Promise<void> {
+    try {
+
+        // REQUEST:
+        // Dados que serão enviados para a API através do método PUT.
+        // O JSONPlaceholder espera os dados do post que será atualizado.
+
+        const dados = {
+            id: 1,
+            title: "Novo título do post",
+            body: "Estou atualizando este post com TypeScript.",
+            userId: 1
+        };
+
+        // MÉTODO: PUT
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts/1
+        // FINALIDADE: Atualizar/substituir os dados do post de ID 1.
+
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts/1",
+            {
+                method: "PUT",
+
+                // HEADERS:
+                // Informa ao servidor que o corpo da requisição está no formato JSON.
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                // REQUEST BODY:
+                // JSON.stringify() transforma o objeto JavaScript em uma
+                // string JSON para que possa ser enviada no corpo da requisição.
+
+                body: JSON.stringify(dados)
+            }
+        );
+
+        // VERIFICAÇÃO DE RESPOSTA:
+        // response.ok retorna true quando o status HTTP está entre 200 e 299.
+
+        if (response.ok) {
+
+            // RESPONSE:
+            // response.json() transforma a resposta JSON da API
+            // em um objeto JavaScript.
+
+            const resultado = await response.json();
+
+            console.log("Post atualizado com sucesso:");
+            console.log(resultado);
+
+        } else {
+            console.log("Erro ao atualizar o post.");
+            console.log("Status:", response.status);
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
+
+atualizarPost();
+
+
+// ======================================================
+// 5. DELETE — APAGAR POST DE ID 1
+// ======================================================
+
+async function apagarPost(): Promise<void> {
+    try {
+
+        // MÉTODO: DELETE
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts/1
+        // FINALIDADE: Enviar uma requisição para remover o post de ID 1.
+
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts/1",
+            {
+                method: "DELETE"
+            }
+        );
+
+        // VERIFICAÇÃO DE RESPOSTA:
+        // response.ok retorna um booleano (true para status HTTP 200-299)
+        // permitindo verificar se a remoção foi aceita com sucesso pela API.
+
+        if (response.ok) {
+            console.log("Post apagado com sucesso!");
+        } else {
+            console.log("Erro ao apagar o post.");
+            console.log("Status:", response.status);
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
+
+apagarPost();
+
+
+// ======================================================
+// 6. GET — TESTAR POST INEXISTENTE
+// ======================================================
+
+async function buscarPostInexistente(): Promise<void> {
+    try {
+
+        // MÉTODO: GET
+        // ENDPOINT: https://jsonplaceholder.typicode.com/posts/99999
+        // FINALIDADE: Tentar buscar um post que não existe,
+        // para testar o tratamento de erro da API.
+
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts/99999"
+        );
+
+        // VERIFICAÇÃO DE RESPOSTA:
+        // O fetch não lança uma exceção automaticamente quando a API
+        // retorna um erro HTTP, como o status 404.
+        // Por isso, é necessário verificar response.ok.
+
+        if (response.ok) {
+
+            // RESPONSE:
+            // response.json() transforma a resposta JSON da API
+            // em um objeto JavaScript.
+
+            const resultado = await response.json();
+
+            console.log("Post encontrado:");
+            console.log(resultado);
+
+        } else {
+
+            console.log("Erro ao buscar o post.");
+            console.log("Post não encontrado.");
+            console.log("Status:", response.status);
+        }
+
+    } catch (error) {
+        console.error("Erro na requisição:", error);
+    }
+}
+
+buscarPostInexistente();
